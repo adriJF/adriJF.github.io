@@ -1,0 +1,228 @@
+<html>
+<head>
+<title>Calculadora interes compuesto</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="sitestyle.css">
+<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<script>
+var textS1 = "Despejar";
+var textS2 = "Utiliza el logaritmo"
+var textS3 = "Usa la propiedad"
+var textS4 = "Evalúa"
+var step = 1;
+ 
+
+function emptyInputs(){
+	if($("#monto").val() == "" || $("#capital").val()== ""  || $("#interes").val()== ""){
+		return true;
+	}
+	return false;
+}
+
+function evalua1(){
+	var text = "log("+ $("#monto").val()+"/"+ $("#capital").val()+") = n log( 1 + "+ ($("#interes").val()/100) + ")"; 
+	$("#resultP3").text(text);
+	var evalP3 = Math.log10($("#monto").val()/$("#capital").val()) + " = n ("+ Math.log10( 1+ ($("#interes").val()/100)) + ")";
+	$("#evalP3").text(evalP3);
+	var result = "n = " + Math.log10($("#monto").val()/$("#capital").val()) + "/" +Math.log10( 1+ ($("#interes").val()/100)) +" = "+ Math.log10($("#monto").val()/$("#capital").val())/Math.log10( 1+ ($("#interes").val()/100))
+	$("#result").text(result);
+}
+
+function evalua2(){
+	var resultado = "n = " + Math.log10($("#monto").val()/$("#capital").val())/Math.log10( 1+ ($("#interes").val()/100))
+	$("#resultado").text(resultado);
+
+	//Como este es el ultimo funcion llamada funcionara para mostrar el borde iluminado
+}
+
+function ilumina_inpust(){
+	//'box-shadow', 'inset 0px 0px 40px 40px #DBA632'
+	//'box-shadow', '20px 20px 50px 10px yellow inset'
+	//'border', '5px solid #b217b4'
+	//'border', '2px outset #0994EE'
+	$("#c1 input").css('box-shadow', '20px 20px 50px 10px yellow inset');
+	setTimeout(function(){
+        $("#c1 input").css('box-shadow', ''); },
+        2000);
+}
+
+$(document).ready(function(){
+  $("#monto").on("input", function() {
+  		evalua1();
+			evalua2();
+  	});
+  $("#capital").on("input", function() {
+  		evalua1();
+			evalua2();
+  	});
+  $("#interes").on("input", function() {
+  		evalua1();
+			evalua2();
+  	});
+
+  $("#btn-result").click(function(){
+  	if (emptyInputs()){$("#myModal").modal('toggle');return; }
+  	else{evalua2();$("#sresultado").show(); $("#btn-nuevo").show();
+    $("#btn-main").hide();}
+    ilumina_inpust();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#sresultado").offset().top
+    }, 1000);
+  });
+
+  $("#btn-pasos").click(function(){
+  	$("#sForm").show();
+  	$("#btn-nuevo").show();
+  	$("#btn-next").show();
+  	$("#btn-next").text(textS1);
+  	step = step +1;
+    $("#btn-main").hide();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#btn-next").offset().top
+    }, 1000);
+    
+  });
+  $("#btn-next").click(function(){
+  	//el texto y el boton estan desfazados por el hecho de que en el primer momento se muestra el bnt step 1. 
+  	//quiza no es la mejor logica, pero ya no quise moverle jaja
+    if (step == 2) { $("#s1").show();
+    	$("#btn-next").text(textS2);}
+    else if (step == 3) { $("#s2").show();
+    	$("#btn-next").text(textS3);}
+    else if (emptyInputs()){$("#myModal").modal('toggle');return; }
+    else{
+    	$("#s"+(step-1)).show();
+	    if (step == 4) {evalua1();$("#btn-next").text(textS4);}
+		if (step == 5) {
+			evalua2();
+			$("#btn-next").hide(); 
+			$("#sresultado").show(); 
+			ilumina_inpust();
+			step = 1; }
+	    //caso para ocultar boton de siguiente
+    }
+    step = step +1;
+    
+  });
+
+  $("#btn-nuevo").click(function(){
+  	step = 1;
+  	$("#c2 .formula").hide();
+  	$("#btn-main").show();
+  	$("#btn-nuevo").hide();
+  	$(".instruction").show();
+  	$("#monto").val('');
+  	$("#capital").val('');
+  	$("#interes").val('');
+		$("#btn-next").hide();
+		$([document.documentElement, document.body]).animate({
+        scrollTop: $(".instruction").offset().top
+    }, 1000);
+  });
+
+  $("#btn-main button").click(function(){
+  	if (!emptyInputs()){
+  	$(".instruction").hide();
+  	}
+  });
+
+});
+</script>
+</head>
+<body>
+
+<div class="header">
+  	Calculadora interés compuesto
+		<img src="impuestos.jpeg" width="150" height="58"  style="right: 0; position: fixed; top: 0;">  	
+</div>
+
+
+<div class = "div-instruction "style="height: 60px; margin: 20px;">
+	<div class="instruction">
+		<p>Proporciona los datos para encontrar el número de años (n) y da clic en la opción que prefieres</p>
+	</div>
+</div>
+
+
+<div class="column" id="c1">
+	<div class="form-item message-error" data-tooltip="Valor del dinero en el futuro, es el capital más los intereses generados"-->
+		<p>Monto</p>
+		<input type="number" class="form-control" id="monto" min="1" placeholder="M = ">
+	</div>
+	<div class="form-item message-error" data-tooltip="Cantidad localizada en una fecha o punto inicial"-->
+	<p>Capital</p>
+	<input type="number" class="form-control" id="capital" min="1" placeholder="C =">
+	</div>
+	<div class="form-item message-error" data-tooltip="Es la tasa de interés que se cobrará o pagará según sea el caso"-->
+	<p>Tasa de interés compuesta</p>
+	<input type="number" class="form-control" id="interes" min="1" placeholder="i=">
+	</div>
+	<p style="height: 40px;"></p>
+	<div id="btn-main" style="margin-left: 0px;">
+		<button id="btn-result"type="button" style="background-color: #FF8300">Ver <br />resultados</button>
+		<button id="btn-pasos" type="button" style="background-color: #4EAE3E; margin-left: 1%;">Ver <br />pasos</button>
+	</div>
+	<button id="btn-nuevo"type="button" style="background-color: #F24726; display: none; width: 300px;">Limpiar</button>
+	
+</div>
+<!--Columna derecha -->
+<div class="column" id="c2" >
+	<div class="column_height">
+		<div id="sForm" class="formula"> 
+			<p class="step">Fórmula del interés compuesto <br /><p class="result">M = C(1+i)^n</p></p></div>
+	  <div id="s1" class="formula">
+	  		<p class="step">1- Despejar la variable <br />
+	  		<p class="result">M/C = (1+i)^n</p></p></div>
+		<div id="s2" class="formula"> 
+			<p class="step">2- Utiliza el logaritmo <br />
+	  		<p class="result">log(M/C) = log(1+i)^n</p></p></div>
+	 	<div id="s3" class="formula">  
+	 		<p class="step">3- Usa la propiedad del logaritmo y evalúa<br />
+	 		<p class="result">log(M/C) = nlog(1+i)</p>
+	 		<p class="result" id="resultP3"></p>
+	 		<p class="result" id="evalP3"></p></p></div>
+	 	<div id="s4" class="formula">  
+	 		<p class="step">4- Despejar n y evalúa<br />
+	 		<p class="result">n = log(M/C)/log(1+i)</p></p>
+	 		<p class="result" id="result"></p></p></div>
+		<div id = "sresultado" style="margin-bottom: 70px !important;" class="formula">
+			<p class="step"  style="background: #05D5A3;">Resultado<br />
+	 		<p class="result" id="resultado"  style="background: #05D5A3;"></p></p></div>
+	</div> <!--Termina columna_height-->
+ 	<div id="div-next" style="text-align: center; margin-top: 40px; margin-bottom: 70px; height: 65px;">
+ 		<button id="btn-next" type="button" style="background-color: #FF6F00; margin-top: 20px; display: none; "></button>
+ 	</div>
+</div> <!--Termina columna-->
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Introduzca valores</h4>
+        </div>
+        <div class="modal-body">
+          <p>Introduzca los valores monto, capital y tasa de interés para continuar</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<div class="footer">
+	<p><span style="font-weight: bold;">¿Qué es el interés compuesto?</span> Es aquel que se va sumando al capital inicial y sobre el que se van generando nuevos intereses. <br>
+	El dinero, en este caso, tiene un efecto multiplicador porque los intereses producen nuevos intereses.</p>
+</div>
+
+</body>
+</html>

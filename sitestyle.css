@@ -1,0 +1,269 @@
+body{
+  margin: 0; padding: 0;
+}
+
+.header {
+  padding: 8px;
+  text-align: center;
+  background: #0994EE;  
+  opacity: 0.85;
+  color: white;
+  font-family: 'Noto Sans';
+  font-size: 30px;
+  width: 100%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #FFF3A5;
+  opacity: 0.85;
+  color: black;
+  font-family: 'Noto Sans';
+  text-align: center;
+  font-weight: lighter;
+  padding-top: 4px;
+  height: 50px;
+}
+
+.instruction {
+  background: #414BB2;
+  opacity: 0.85;
+}
+
+.instruction p{
+  color: white;
+  font-family: 'Noto Sans';
+  font-size: 20px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 20px;
+}
+ 
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  width: 50%;
+}
+
+#c1 *{
+  margin-left: 35%;
+}
+#c1 p{
+    margin: 20px 0px 5px 0px;
+    font-family: 'Roboto Mono';
+}
+#c1 input{
+    width: 300px;
+    height: 50px;
+    margin-left:0px !important;
+}
+button{
+    width: 150px;
+    height: 65px;
+    color: white;
+    font-family: 'Roboto Mono';
+    border: none;
+    border-radius: 15px;
+}
+#c2 .formula{
+  display: none;
+}
+#c2 p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 80%;
+    color: #414BB2;
+    font-family: 'Roboto Mono';
+    background: rgba(18, 205, 212, .4)   
+}
+
+.result:hover {
+  background: rgba(18, 205, 212, 1) !important;
+  font-size: 18px;
+  padding: 5px 0px !important;;
+  margin: 2px 0px !important;;
+  cursor: zoom-in;
+
+}
+
+.step{
+  padding-top: 10px;
+  font-size: 13px;
+}
+
+.result{
+  text-align: center; 
+  padding-bottom: 4px;
+
+}
+
+.column_height{
+  height: 300px;
+}
+
+
+/* Responsive layout - when the screen is less than 600px wide, make the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .column {
+    width: 100%;
+  }
+
+  #c1 *{
+    margin-left: 20px;
+  }
+
+  #c1 p{
+      margin: 20px 0px 5px 0px;
+      font-family: 'Roboto Mono';
+      font-size: 12px;
+  }
+  #c1 input{
+      width: 80%;
+      margin-left:0px !important;
+      height: 40px;
+      font-size: 10px;
+  }
+button{
+      width: 33%;
+      height: 45px;
+      color: white;
+      font-family: 'Roboto Mono';
+      border: none;
+      border-radius: 15px;
+      font-size: 12px;
+      margin: 0px 8% 50px 10%;
+      
+  }
+
+  #c2{
+    margin-bottom: 40px;
+  }
+  
+  #c2 *{
+    margin-left: 20px;
+  }
+
+  #c2 p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 80%;
+    color: #414BB2;
+    font-family: 'Roboto Mono';
+    background: rgba(18, 205, 212, .4)   
+}
+
+  .step{
+    padding-top: 10px;
+    font-size: 13px;
+  }
+
+  .result{
+    text-align: center; 
+    padding-top: 3px;
+    padding-bottom: 5px;
+    width: 80%;
+  }
+
+  .header img{
+    display: none;
+  }
+
+  .div-instruction{
+    height: 0px;
+    margin: 0px;
+  }
+
+  .instruction p{
+    font-size: 10px;
+    width: 90%;
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #FFF3A5;
+    opacity: 0.85;
+    color: black;
+    text-align: center;
+  }
+
+  .footer p{
+    font-family: 'Noto Sans';
+    font-size: 8px;
+  }
+
+
+  .column_height{
+    margin-bottom: 90px;
+  }
+} /* termina el responsive para celular
+
+
+//pantallas grandes
+/* Responsive layout - when the screen is less than 600px wide, make the three columns stack on top of each other instead of next to each other */
+@media screen and (min-width: 1500px) {
+  .footer{
+    font-size: 17px;
+    font-family: 'Noto Sans';
+    padding-bottom: 10px;
+  }
+
+  #c1 p{
+    margin: 20px 0px 5px 0px;
+    font-family: 'Roboto Mono';
+    font-size: 18px;
+  }
+  .form-item {
+    font-size: 18px;
+  }
+}
+
+
+@-webkit-keyframes showTooltip {<!--from w ww  .ja  v a  2  s.c  o  m-->
+  from {opacity: 0;}
+    to {opacity: 1;}
+}
+@-moz-keyframes showTooltip {
+  from {opacity: 0;}
+    to {opacity: 1;}
+}
+@keyframes showTooltip {
+  from {opacity: 0;}
+    to {opacity: 1;}
+}
+.form-item {
+  position: relative;
+}
+.message-error:after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 0;
+  left: 30%;
+  display: none;
+  padding: 1em 2em;
+  color: white;
+}
+
+.message-error:hover:after {
+  display: block;
+  -webkit-animation: showTooltip 0.35s ease-in-out;
+  -moz-animation: showTooltip 0.35s ease-in-out;
+  animation: showTooltip 0.35s ease-in-out;
+}
+.message-error:after {
+  background-color: #BFB5B5;
+}
+
